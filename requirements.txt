@@ -5,3 +5,4 @@ typing_extensions==4.7.1
 tzdata==2023.3
 djangorestframework~=3.14.0
 pygments~=2.15.0
+httpie~=3.2.0
