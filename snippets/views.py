@@ -11,6 +11,7 @@ from rest_framework.views import APIView
 from rest_framework import mixins
 from rest_framework import generics
 from django.contrib.auth import get_user_model
+from rest_framework import permissions
 
 
 class UserList(generics.ListAPIView):
@@ -29,6 +30,7 @@ class UserDetail(generics.RetrieveAPIView):
 class SnippetList(generics.ListCreateAPIView):
     queryset = Snippet.objects.all()
     serializer_class = SnippetSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
     def perform_create(self, serializer):
         # Perform serializer.data save, but now with user
@@ -38,6 +40,7 @@ class SnippetList(generics.ListCreateAPIView):
 class SnippetDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Snippet.objects.all()
     serializer_class = SnippetSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
 
 """Class-based api views with GenericAPIView and using mixins"""
