@@ -15,7 +15,7 @@ class SnippetSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Snippet
         fields = [
-            "url",
+            "url",  # detail link from HyperlinkedModelSerializer (snippet-detail)
             "id",
             "highlight",
             "owner",
@@ -28,18 +28,21 @@ class SnippetSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
+    # Ссылки
     snippets = serializers.HyperlinkedRelatedField(
         many=True, view_name="snippet-detail", read_only=True
     )
 
     class Meta:
         model = get_user_model()
+        # url link from HyperlinkedModelSerializer (user-detail)
         fields = ["url", "id", "username", "snippets"]
 
 
 """ModelSerializer class"""
 
 # class UserSerializer(serializers.ModelSerializer):
+#     # Просто список pk
 #     snippets = serializers.PrimaryKeyRelatedField(
 #         many=True, queryset=Snippet.objects.all()
 #     )

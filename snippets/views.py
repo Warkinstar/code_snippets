@@ -19,18 +19,7 @@ from rest_framework import viewsets
 from rest_framework.decorators import action
 
 
-@api_view(["GET"])
-def api_root(request, format=None):
-    return Response(
-        {
-            "users": reverse("customuser-list", request=request, format=format),
-            "snippets": reverse("snippet-list", request=request, format=format),
-        }
-    )
-
-
 """Using ViewSets"""
-
 
 class UserViewSet(viewsets.ReadOnlyModelViewSet):
     """This viewset automatically provides 'list' and 'retrieve' actions"""
@@ -66,6 +55,18 @@ class SnippetViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
+
+
+"""A single entry point to our API, dont need when using routers and viewsets"""
+
+# @api_view(["GET"])
+# def api_root(request, format=None):
+#     return Response(
+#         {
+#             "users": reverse("customuser-list", request=request, format=format),
+#             "snippets": reverse("snippet-list", request=request, format=format),
+#         }
+#     )
 
 
 """Using generic class-based views"""
@@ -115,6 +116,7 @@ class SnippetViewSet(viewsets.ModelViewSet):
 #     queryset = Snippet.objects.all()
 #     serializer_class = SnippetSerializer
 #
+#     # Явное указание методов (необязательно)
 #     def get(self, request, *args, **kwargs):
 #         return self.list(request, *args, **kwargs)
 #
@@ -131,6 +133,7 @@ class SnippetViewSet(viewsets.ModelViewSet):
 #     queryset = Snippet.objects.all()
 #     serializer_class = SnippetSerializer
 #
+#     # Явное указание методов (необязательно)
 #     def get(self, request, *args, **kwargs):
 #         return self.retrieve(request, *args, **kwargs)
 #
